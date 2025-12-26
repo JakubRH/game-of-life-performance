@@ -1,48 +1,48 @@
-# Game of Life Performance Benchmarks in Python
+# Conway's Game of Life – Performance Benchmarks in Python
 
-A collection of Conway's Game of Life implementations in Python, comparing performance across different optimization techniques (2025).
+This repository presents several implementations of Conway's Game of Life in Python, focusing on performance comparison across different optimization techniques.
 
-The goal is to simulate a **4096 × 4096 grid** over **10,000 generations** and measure execution time on modern hardware.
+## What is Conway's Game of Life?
+
+Conway's Game of Life is a zero-player cellular automaton created by mathematician John Horton Conway in 1970. It takes place on an infinite two-dimensional grid of square cells, each of which is either alive or dead.
+
+The state of the grid evolves in discrete generations according to four simple rules based on the number of live neighbors (using the Moore neighborhood – the 8 surrounding cells):
+
+- **Underpopulation**: A live cell with fewer than 2 live neighbors dies.
+- **Survival**: A live cell with 2 or 3 live neighbors survives to the next generation.
+- **Overpopulation**: A live cell with more than 3 live neighbors dies.
+- **Reproduction**: A dead cell with exactly 3 live neighbors becomes alive.
+
+Despite its simplicity, the Game of Life can produce remarkably complex and emergent behavior, making it a popular subject for studying computation, emergence, and algorithmic efficiency.
+
+## Benchmark Setup
+
+All implementations simulate a grid of **1000 × 1000 cells** over **10,000 generations**.  
+Tests were performed on a Gigabyte G5 GD laptop (11th Gen Intel Core i5-11400H @ 2.70 GHz, NVIDIA RTX 3050 GPU).
 
 ## Implementations Included
 
-- Pure Python (baseline)
-- Numba CPU (with `prange` parallelization)
+- Pure Python (baseline, list-based)
+- Numba CPU (single-threaded with `@njit`)
+- Numba CPU with multi-threading (`prange`)
 - Numba CUDA (basic GPU kernel)
-- Numba CUDA with shared memory optimization
-- Taichi (GPU-accelerated, Python-like syntax)
-- CuPy (GPU convolution using `roll` operations)
-- HashLife algorithm (via `python-lifelib`)
+- Taichi (GPU-accelerated, high-level syntax)
+- CuPy + SciPy convolution (hybrid CPU/GPU approach)
 
-## Results (example on RTX 4070 Laptop, December 2025)
+## Usage
 
-| Implementation              | Time (seconds) | Speedup vs Pure Python |
-|-----------------------------|----------------|------------------------|
-| Pure Python                 | >1800          | 1×                     |
-| Numba CPU (parallel)        | ~15–20         | ~100×                  |
-| Numba CUDA (basic)          | ~0.5–0.6       | ~3000×                 |
-| Numba CUDA (shared memory)  | ~0.15–0.20     | ~10,000×               |
-| **Taichi (GPU)**            | **~0.12–0.18** | **~12,000×**           |
-| CuPy (roll + fuse)          | ~0.25–0.35     | ~6000×                 |
-| HashLife (python-lifelib)   | ~3–8           | ~300×                  |
+Open `benchmark.ipynb` in Jupyter Notebook or JupyterLab.  
+Each section contains a complete implementation with timing measurement. Run the cells sequentially to reproduce the results.
 
-> **Winner**: Taichi — best combination of performance and code readability.
+The notebook includes code explanations and discussion of trade-offs between readability and performance.
 
-## Requirements
+## License
 
-- Python 3.10+
-- NVIDIA GPU recommended for GPU versions
-- See `environment.yml` for full dependencies
+MIT License – feel free to use, modify, and share.
 
-```yaml
-name: gol-benchmark
-dependencies:
-  - python=3.10
-  - numpy
-  - numba
-  - taichi
-  - cupy
-  - python-lifelib
-  - jupyter
-  - matplotlib
-  - pandas
+## Author
+
+Jakub Hryc, PhD  
+Computational Biology & Scientific Computing
+
+December 2025
