@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv
+pip-delete-this-directory.txt
+pip-wheel-metadata/
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb_checkpoints
+
+# Dane tymczasowe / wyniki
+results/
+*.csv
+*.png
+*.jpg
+
+# IDE
+.vscode/
+.idea/
+*.sublime-workspace
+
+# System
+.DS_Store
+Thumbs.db
